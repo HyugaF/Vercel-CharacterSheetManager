@@ -1,0 +1,393 @@
+{
+  "info": {
+    "_postman_id": "tabletop-player-sheet-manager-api-v1",
+    "name": "Tabletop Player Sheet Manager - REST API Collection",
+    "description": "Koleksi pengujian REST API lengkap Tugas Akhir Learning Labs: Backend Development (Characters, Stats, Inventory, Spells, Saves).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Characters",
+      "item": [
+        {
+          "name": "GET All Characters",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/characters",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "characters"]
+            },
+            "description": "Mengambil seluruh data karakter"
+          }
+        },
+        {
+          "name": "GET Character by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/characters/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "characters", "1"]
+            },
+            "description": "Menampilkan detail lengkap karakter beserta stats dan inventory"
+          }
+        },
+        {
+          "name": "POST Create Character",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"character_name\": \"Gimli Son of Gloin\",\n  \"race\": \"Dwarf\",\n  \"character_class\": \"Barbarian\",\n  \"character_level\": 3,\n  \"experience_points\": 1200,\n  \"background\": \"Soldier\",\n  \"alignment\": \"Chaotic Good\",\n  \"stats\": {\n    \"strength\": 18,\n    \"dexterity\": 12,\n    \"constitution\": 16,\n    \"intelligence\": 8,\n    \"wisdom\": 12,\n    \"charisma\": 10,\n    \"max_hp\": 35,\n    \"current_hp\": 35,\n    \"armor_class\": 15\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/characters",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "characters"]
+            },
+            "description": "Menambahkan karakter baru beserta data ability scores"
+          }
+        },
+        {
+          "name": "PUT Update Character",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"character_name\": \"Thorin Oakenshield II\",\n  \"race\": \"Mountain Dwarf\",\n  \"character_class\": \"Fighter\",\n  \"stats\": {\n    \"strength\": 18,\n    \"armor_class\": 17\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/characters/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "characters", "1"]
+            },
+            "description": "Mengubah informasi karakter yang sudah tersimpan"
+          }
+        },
+        {
+          "name": "DELETE Character",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/characters/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "characters", "1"]
+            },
+            "description": "Menghapus karakter dan seluruh relasinya (CASCADE)"
+          }
+        },
+        {
+          "name": "GET Search Characters",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/characters/search?q=wizard",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "characters", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "wizard"
+                }
+              ]
+            },
+            "description": "Mencari karakter berdasarkan kata kunci nama, class, atau race"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Gameplay Actions",
+      "item": [
+        {
+          "name": "PATCH Modify HP (Damage / Heal)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"delta\": -5\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/characters/1/hp",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "characters", "1", "hp"]
+            },
+            "description": "Mengubah HP karakter (negatif untuk damage, positif untuk heal)"
+          }
+        },
+        {
+          "name": "POST Add Experience Points (XP)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": 500\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/characters/1/xp",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "characters", "1", "xp"]
+            },
+            "description": "Menambah XP dan memicu naik level otomatis"
+          }
+        },
+        {
+          "name": "GET Check Level Up Eligibility",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/characters/1/levelup",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "characters", "1", "levelup"]
+            },
+            "description": "Memeriksa status dan progres level up"
+          }
+        },
+        {
+          "name": "POST Reset Character State",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/characters/1/reset",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "characters", "1", "reset"]
+            },
+            "description": "Mengembalikan HP ke penuh dan menyegarkan kondisi karakter"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Inventory Items",
+      "item": [
+        {
+          "name": "GET Character Inventory",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/characters/1/inventory",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "characters", "1", "inventory"]
+            },
+            "description": "Menampilkan seluruh item di inventory karakter"
+          }
+        },
+        {
+          "name": "POST Add Inventory Item",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"item_name\": \"Potion of Greater Healing\",\n  \"quantity\": 2,\n  \"weight\": 1.0,\n  \"description\": \"Heals 4d4 + 4 hit points\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/characters/1/inventory",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "characters", "1", "inventory"]
+            },
+            "description": "Menambahkan item baru ke inventory karakter"
+          }
+        },
+        {
+          "name": "DELETE Remove Inventory Item",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/characters/1/inventory/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "characters", "1", "inventory", "1"]
+            },
+            "description": "Menghapus item dari inventory"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Spells",
+      "item": [
+        {
+          "name": "GET Master Spells",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/spells",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "spells"]
+            },
+            "description": "Daftar master spell di library"
+          }
+        },
+        {
+          "name": "GET Character Spells",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/characters/1/spells",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "characters", "1", "spells"]
+            },
+            "description": "Daftar spell yang dikuasai karakter"
+          }
+        },
+        {
+          "name": "POST Assign Spell to Character",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"spell_id\": 1,\n  \"is_prepared\": true,\n  \"notes\": \"Primary offensive cantrip\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/characters/1/spells",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "characters", "1", "spells"]
+            },
+            "description": "Menambahkan spell ke spellbook karakter"
+          }
+        },
+        {
+          "name": "PATCH Toggle Spell Prepared",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"is_prepared\": false\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/characters/1/spells/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "characters", "1", "spells", "1"]
+            },
+            "description": "Mengubah status persiapan spell"
+          }
+        },
+        {
+          "name": "DELETE Remove Spell from Character",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/characters/1/spells/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "characters", "1", "spells", "1"]
+            },
+            "description": "Menghapus spell dari spellbook"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Backup Saves",
+      "item": [
+        {
+          "name": "GET Character Saves",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/characters/1/saves",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "characters", "1", "saves"]
+            },
+            "description": "Melihat riwayat snapshot backup karakter"
+          }
+        },
+        {
+          "name": "POST Create Save Snapshot",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"save_name\": \"Before Dragon Lair Encounter\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/characters/1/saves",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "characters", "1", "saves"]
+            },
+            "description": "Menyimpan snapshot data lengkap karakter"
+          }
+        },
+        {
+          "name": "POST Restore Snapshot Save",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/characters/1/restore/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "characters", "1", "restore", "1"]
+            },
+            "description": "Memulihkan kondisi karakter dari snapshot tersimpan"
+          }
+        }
+      ]
+    }
+  ]
+}

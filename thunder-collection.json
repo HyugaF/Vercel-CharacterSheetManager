@@ -1,0 +1,158 @@
+{
+  "client": "Thunder Client",
+  "collectionName": "Tabletop Player Sheet Manager",
+  "dateExported": "2026-10-24T12:00:00.000Z",
+  "version": "1.1",
+  "folders": [
+    { "_id": "f_chars", "name": "Characters", "sortNum": 10000 },
+    { "_id": "f_actions", "name": "Gameplay Actions", "sortNum": 20000 },
+    { "_id": "f_inv", "name": "Inventory", "sortNum": 30000 },
+    { "_id": "f_spells", "name": "Spells", "sortNum": 40000 },
+    { "_id": "f_saves", "name": "Backup Saves", "sortNum": 50000 }
+  ],
+  "requests": [
+    {
+      "_id": "req_1",
+      "colId": "tabletop",
+      "containerId": "f_chars",
+      "name": "1. GET All Characters",
+      "url": "http://localhost:3000/api/characters",
+      "method": "GET",
+      "sortNum": 10010
+    },
+    {
+      "_id": "req_2",
+      "colId": "tabletop",
+      "containerId": "f_chars",
+      "name": "2. GET Character By ID",
+      "url": "http://localhost:3000/api/characters/1",
+      "method": "GET",
+      "sortNum": 10020
+    },
+    {
+      "_id": "req_3",
+      "colId": "tabletop",
+      "containerId": "f_chars",
+      "name": "3. POST Create Character",
+      "url": "http://localhost:3000/api/characters",
+      "method": "POST",
+      "sortNum": 10030,
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"character_name\": \"Gimli Son of Gloin\",\n  \"race\": \"Dwarf\",\n  \"character_class\": \"Barbarian\",\n  \"character_level\": 3,\n  \"experience_points\": 1200,\n  \"background\": \"Soldier\",\n  \"alignment\": \"Chaotic Good\",\n  \"stats\": {\n    \"strength\": 18,\n    \"dexterity\": 12,\n    \"constitution\": 16,\n    \"intelligence\": 8,\n    \"wisdom\": 12,\n    \"charisma\": 10,\n    \"max_hp\": 35,\n    \"current_hp\": 35,\n    \"armor_class\": 15\n  }\n}"
+      }
+    },
+    {
+      "_id": "req_4",
+      "colId": "tabletop",
+      "containerId": "f_chars",
+      "name": "4. PUT Update Character",
+      "url": "http://localhost:3000/api/characters/1",
+      "method": "PUT",
+      "sortNum": 10040,
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"character_name\": \"Aric Stormcaller Master\",\n  \"stats\": {\n    \"intelligence\": 18,\n    \"armor_class\": 13\n  }\n}"
+      }
+    },
+    {
+      "_id": "req_5",
+      "colId": "tabletop",
+      "containerId": "f_chars",
+      "name": "5. DELETE Character",
+      "url": "http://localhost:3000/api/characters/1",
+      "method": "DELETE",
+      "sortNum": 10050
+    },
+    {
+      "_id": "req_6",
+      "colId": "tabletop",
+      "containerId": "f_actions",
+      "name": "6. PATCH Modify HP",
+      "url": "http://localhost:3000/api/characters/1/hp",
+      "method": "PATCH",
+      "sortNum": 20010,
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"delta\": -5\n}"
+      }
+    },
+    {
+      "_id": "req_7",
+      "colId": "tabletop",
+      "containerId": "f_actions",
+      "name": "7. POST Add XP",
+      "url": "http://localhost:3000/api/characters/1/xp",
+      "method": "POST",
+      "sortNum": 20020,
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"amount\": 500\n}"
+      }
+    },
+    {
+      "_id": "req_8",
+      "colId": "tabletop",
+      "containerId": "f_inv",
+      "name": "8. GET Inventory",
+      "url": "http://localhost:3000/api/characters/1/inventory",
+      "method": "GET",
+      "sortNum": 30010
+    },
+    {
+      "_id": "req_9",
+      "colId": "tabletop",
+      "containerId": "f_inv",
+      "name": "9. POST Add Inventory Item",
+      "url": "http://localhost:3000/api/characters/1/inventory",
+      "method": "POST",
+      "sortNum": 30020,
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"item_name\": \"Potion of Healing\",\n  \"quantity\": 2,\n  \"weight\": 0.5,\n  \"description\": \"Restores 2d4+2 HP\"\n}"
+      }
+    },
+    {
+      "_id": "req_10",
+      "colId": "tabletop",
+      "containerId": "f_spells",
+      "name": "10. GET Spells",
+      "url": "http://localhost:3000/api/characters/1/spells",
+      "method": "GET",
+      "sortNum": 40010
+    },
+    {
+      "_id": "req_11",
+      "colId": "tabletop",
+      "containerId": "f_spells",
+      "name": "11. POST Assign Spell",
+      "url": "http://localhost:3000/api/characters/1/spells",
+      "method": "POST",
+      "sortNum": 40020,
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"spell_id\": 1,\n  \"is_prepared\": true,\n  \"notes\": \"Main offensive cantrip\"\n}"
+      }
+    },
+    {
+      "_id": "req_12",
+      "colId": "tabletop",
+      "containerId": "f_saves",
+      "name": "12. POST Create Save Snapshot",
+      "url": "http://localhost:3000/api/characters/1/saves",
+      "method": "POST",
+      "sortNum": 50010,
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"save_name\": \"Before Dragon Cave\"\n}"
+      }
+    }
+  ]
+}

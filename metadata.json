@@ -1,0 +1,6 @@
+{
+  "name": "Tabletop Player Sheet Manager",
+  "description": "TTRPG Character Sheet Manager with 6 Relational Tables, Full CRUD REST API, 20 Core Functions, ERD, and Thunder Client Testing Suite.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
